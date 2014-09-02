@@ -37,6 +37,11 @@ if __name__ == '__main__':
         sorted(threads, key=lambda thread: threads.created)
         for thread in theads:
             post = thread.selftext
+            players_involved = parseRedditPost(post)
+
             comments = thread.comments
+            players_recommended = parseRedditComments(comments)
+
+
 
 
