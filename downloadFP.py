@@ -13,8 +13,9 @@ def downloadFP(pos,week):
     #td = now - edit_time
     if download:
         #The file is old, download a new one
-        curl_str = "curl http://www.fantasypros.com/nfl/rankings/%s.php?export=xls > %s/week-%s-%s-raw.xls" % (pos,os.getcwd(),week,pos)
+        curl_str = "curl -s http://www.fantasypros.com/nfl/rankings/%s.php?export=xls > %s/week-%s-%s-raw.xls" % (pos,os.getcwd(),week,pos)
         sed_str = "sed '1,4d' %s/week-%s-%s-raw.xls > %s/week_%s_%s.tsv" % (os.getcwd(),week,pos,os.getcwd(),week,pos)
+        print "Downloading and parsing data for week %d and position %s" % (week,pos)
         os.system(curl_str)
         os.system(sed_str)
 
@@ -22,4 +23,4 @@ def downloadFP(pos,week):
     with open("%s/week_%s_%s.tsv"%(os.getcwd(),week,pos),'r') as tsv:
         all_player_data = [line.strip().split('\t') for line in tsv]
 
-    return all_player_data
+    return all_player_data[1:]
