@@ -40,20 +40,43 @@ def parse_reddit_replies(replies, players_involved):
     return recommendations
 
 
-def parse_reddit_comments(comments, player_names):
+def parse_reddit_comments(comments, player_names,verbose=False):
     #scoring, recommendation, over, count
-    for comment in comments:
-        print "Beginning processing a WDIS which is:\n %s \n" % comment.body
-        players_involved = parse_reddit_post(comment.body, player_names)
-        if players_involved == -1:
-            break
 
-        replies = comment.replies
-        player_recommendations = parse_reddit_replies(replies, players_involved)
-        print "\n"
-        for player in players_involved:
-            print "%d Recommendations for %s" % (player_recommendations[player], player)
-        print "\n"
+    #comments are a list of tuples where the first element is the comment
+    #text and the second element is a list of the comment replies text
+    comments = initial_split(comments)
+    for i,c in enumerate(comments):
+        if verbose:
+            print "Comment %d has %d replies" % (i,len(c[1]))
+#    for comment in comments:
+#        if verbose:
+#            print "Beginning processing a WDIS which is:\n %s \n" % comment.body
+#        players_involved = parse_reddit_post(comment.body, player_names)
+#        if players_involved == -1:
+#            break
+#
+#        replies = comment.replies
+#        player_recommendations = parse_reddit_replies(replies, players_involved)
+#        if verbose:
+#            print "\n"
+#            for player in players_involved:
+#                print "%d Recommendations for %s" % (player_recommendations[player], player)
+#            print "\n"
 
 
     return 0
+
+#Function to initially split comments into comment and reply tuples separate of PRAW
+def initial_split(comments):
+    split_comments = []
+    for comment in comments:
+        post_text = comment.body
+        replies = comment.replies
+
+        #Just extract the text from the bodies
+        reply_text = [r.body for r in replies]
+
+        #Store the comment and its replies as a tuple
+        split_comments.append((post_text,reply_text))
+    return split_comments
