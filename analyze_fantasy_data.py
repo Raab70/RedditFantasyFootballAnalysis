@@ -48,9 +48,6 @@ if __name__ == '__main__':
         print "Beginning analysis on %d threads" % (len(threads))
 
         for thread in threads:
-            #post = thread.selftext
-            #Will only contain: scoring,players involved
-            #players_involved.append(parseRedditPost(post, all_player_data))
 
             #Populate the MoreComments objects so we have all comments
             nd = ['placeholder']
