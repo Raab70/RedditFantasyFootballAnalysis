@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+import praw
+
 #TODO: Make everything .lower()
 #TODO: create tuples of nicknames
 #TODO: Fuzzy string matching?
@@ -72,7 +74,7 @@ def initial_split(comments):
     split_comments = []
     for comment in comments:
         post_text = comment.body
-        replies = comment.replies
+        replies = filter(lambda x: isinstance(x,praw.objects.Comment) , comment.replies)
 
         #Just extract the text from the bodies
         reply_text = [r.body for r in replies]

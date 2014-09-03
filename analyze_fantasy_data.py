@@ -14,6 +14,10 @@ def parse_args():
     parser.add_argument('--positions',
                         help='comma separated positions to be analyzed, default is all, valid options are rb,wr,flex',
                         metavar='POS1,POS2,...')
+    parser.add_argument('--verbose',help='print verbose outputs',
+        action='store_true',default=False,required=False)
+    parser.add_argument('--test',help='Run in testing mode with limitted download',
+        action='store_true',default=False,required=False)
 
     return parser.parse_args()
 
@@ -21,6 +25,10 @@ def parse_args():
 if __name__ == '__main__':
     #Initial setup bullshit
     options = parse_args()
+    test = options.test
+    verbose = options.verbose
+    if test:
+        print 'Running in testing mode'
     if options.positions is not None:
         positions = options.positions.split(',')
     else:
@@ -49,14 +57,17 @@ if __name__ == '__main__':
 
         for thread in threads:
 
-            #Populate the MoreComments objects so we have all comments
-            nd = ['placeholder']
-            while len(nd) > 0:
-                print "Getting more comments. We currently have %d comments. (This can take a while) ..." % (len(thread.comments)-1)
-                nd = praw.objects.Submission.replace_more_comments(thread)
+            if test:
+                thread.comments.pop()
+            else:
+                #Populate the MoreComments objects so we have all comments
+                nd = ['placeholder']
+                while len(nd) > 0:
+                    print "Getting more comments. We currently have %d comments. (This can take a while) ..." % (len(thread.comments)-1)
+                    nd = praw.objects.Submission.replace_more_comments(thread)
 
             #Will be: scoring, recommendation, over
-            status = parse_reddit_comments(thread.comments, player_names)
+            status = parse_reddit_comments(thread.comments,player_names,verbose=verbose)
 
 
 
