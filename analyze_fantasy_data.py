@@ -41,13 +41,9 @@ if __name__ == '__main__':
         player_names = [row[1] for row in all_player_data]
         submissions = subreddit.search('OFFICIAL [WDIS %s] THREAD: ' % (position.upper()),
                                        period='week', sort='new')
-        threads = [x for x in submissions]
-        titles = [str(t) for t in threads]
-        #For some reason the search also returns the index threads, filter those out
-        for i, thread in enumerate(threads):
-            if "INDEX" in titles[i]:
-                titles.remove(titles[i])
-                threads.remove(threads[i])
+
+        #Filter out threads whos title contains the word "INDEX"
+        threads = filter(lambda x: not "INDEX" in str(x).upper(),submissions)
 
         print "Beginning analysis on %d threads" % (len(threads))
 
