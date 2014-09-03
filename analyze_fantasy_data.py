@@ -55,7 +55,7 @@ if __name__ == '__main__':
             #Populate the MoreComments objects so we have all comments
             nd = ['placeholder']
             while len(nd) > 0:
-                print "Getting more comments (This can take a while) ..."
+                print "Getting more comments. We currently have %d comments. (This can take a while) ..." % (len(thread.comments)-1)
                 nd = praw.objects.Submission.replace_more_comments(thread)
 
             #Will be: scoring, recommendation, over
