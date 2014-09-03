@@ -32,7 +32,7 @@ if __name__ == '__main__':
     players_involved = []
     players_recommended = []
     #Now scrape reddit
-    r = praw.Reddit(user_agent='test')
+    r = praw.Reddit(user_agent='RCR')
     subreddit = r.get_subreddit('fantasyfootball')
     print "Analyzing %d positions: %s" % (len(positions),",".join(positions))
     for position in positions:
