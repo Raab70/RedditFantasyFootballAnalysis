@@ -2,6 +2,8 @@
 #TODO: Make everything .lower()
 #TODO: create tuples of nicknames
 #TODO: Fuzzy string matching?
+#TODO: https://pypi.python.org/pypi/python-Levenshtein/0.11.2
+#TODO: Resolve last name differences with matchups from all_player_data
 
 def parse_reddit_post(post_text, player_names):
     players_involved = []
