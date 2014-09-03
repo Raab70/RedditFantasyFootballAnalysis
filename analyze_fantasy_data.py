@@ -5,6 +5,7 @@ import argparse
 #User defined modules
 from downloadFP import download_fp
 from parseReddit import parse_reddit_comments
+#TODO: Compare Reddit suggestions to FP rankings
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Analyze Reddit FF recommendations')
@@ -62,7 +63,7 @@ if __name__ == '__main__':
                 nd = praw.objects.Submission.replace_more_comments(thread)
 
             #Will be: scoring, recommendation, over
-            players_recommended.append(parseRedditComments(thread.comments, player_names))
+            status = parse_reddit_comments(thread.comments, player_names)
 
 
 
