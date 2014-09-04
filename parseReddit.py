@@ -74,6 +74,8 @@ def initial_split(comments):
     split_comments = []
     for comment in comments:
         post_text = comment.body
+
+        #Remove any objects that are not of type praw.objects.Comment
         replies = filter(lambda x: isinstance(x,praw.objects.Comment) , comment.replies)
 
         #Just extract the text from the bodies

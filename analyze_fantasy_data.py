@@ -58,6 +58,7 @@ if __name__ == '__main__':
         for thread in threads:
 
             if test:
+                #Remove the more comments BS
                 thread.comments.pop()
             else:
                 #Populate the MoreComments objects so we have all comments
