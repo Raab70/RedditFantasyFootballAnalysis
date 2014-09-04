@@ -47,3 +47,6 @@ target/
 #Specific to RedditFantasyFootballAnalysis
 *.tsv
 *.xls
+
+#PyCharm files
+.idea/
