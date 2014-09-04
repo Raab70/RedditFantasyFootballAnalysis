@@ -41,6 +41,9 @@ def parse_reddit_replies(replies, players_involved):
                 recommendations[players_involved[i]] += 1
     return recommendations
 
+def parse_post_set(comment,players):
+    return
+
 
 def parse_reddit_comments(comments, player_names,verbose=False):
     #scoring, recommendation, over, count
@@ -51,22 +54,7 @@ def parse_reddit_comments(comments, player_names,verbose=False):
     for i,c in enumerate(comments):
         if verbose:
             print "Comment %d has %d replies" % (i,len(c[1]))
-#    for comment in comments:
-#        if verbose:
-#            print "Beginning processing a WDIS which is:\n %s \n" % comment.body
-#        players_involved = parse_reddit_post(comment.body, player_names)
-#        if players_involved == -1:
-#            break
-#
-#        replies = comment.replies
-#        player_recommendations = parse_reddit_replies(replies, players_involved)
-#        if verbose:
-#            print "\n"
-#            for player in players_involved:
-#                print "%d Recommendations for %s" % (player_recommendations[player], player)
-#            print "\n"
-
-
+        res = parse_post_set(c,player_name)
     return 0
 
 #Function to initially split comments into comment and reply tuples separate of PRAW
