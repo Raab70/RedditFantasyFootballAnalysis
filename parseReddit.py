@@ -53,7 +53,7 @@ def parse_reddit_comments(comments, player_names,verbose=False):
     for i,c in enumerate(comments):
         if verbose:
             print "Comment %d has %d replies" % (i,len(c[1]))
-        res = parse_post_set(c,player_name)
+        res = parse_post_set(c,player_names)
     return 0
 
 #Function to initially split comments into comment and reply tuples separate of PRAW
