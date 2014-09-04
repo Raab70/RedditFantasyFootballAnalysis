@@ -61,13 +61,13 @@ def parse_reddit_comments(comments, player_names,verbose=False):
 def initial_split(comments):
     split_comments = []
     for comment in comments:
-        post_text = comment.body
+        post_text = comment.body.lower()
 
         #Remove any objects that are not of type praw.objects.Comment
         replies = filter(lambda x: isinstance(x,praw.objects.Comment) , comment.replies)
 
         #Just extract the text from the bodies
-        reply_text = [r.body for r in replies]
+        reply_text = [r.body.lower() for r in replies]
 
         #Store the comment and its replies as a tuple
         split_comments.append((post_text,reply_text))

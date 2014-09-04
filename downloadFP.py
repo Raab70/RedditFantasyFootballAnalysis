@@ -21,6 +21,6 @@ def download_fp(pos, week):
 
     #now load the file, it is current
     with open("%s/week_%s_%s.tsv"%(os.getcwd(),week,pos),'r') as tsv:
-        all_player_data = [line.strip().split('\t') for line in tsv]
+        all_player_data = [line.lower().strip().split('\t') for line in tsv]
 
     return all_player_data[2:] #remove the first two rows, an empty one and the titles
