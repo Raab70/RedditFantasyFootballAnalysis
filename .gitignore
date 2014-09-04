@@ -50,3 +50,6 @@ target/
 
 #Virtual environment stuff
 venv
+
+#Remove intelliJ files
+.idea

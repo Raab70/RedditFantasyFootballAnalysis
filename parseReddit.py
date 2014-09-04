@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import praw
 
-#TODO: Make everything .lower()
 #TODO: create tuples of nicknames
 #TODO: Fuzzy string matching?
 #TODO: https://pypi.python.org/pypi/python-Levenshtein/0.11.2
