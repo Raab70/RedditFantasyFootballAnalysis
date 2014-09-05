@@ -47,7 +47,7 @@ target/
 #Specific to RedditFantasyFootballAnalysis
 *.tsv
 *.xls
-*,pickle
+*.pickle
 comments/
 
 #Virtual environment stuff
