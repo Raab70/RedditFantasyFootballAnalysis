@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 import praw
 import argparse
+import pickle
+import os
+import sys
 
 #User defined modules
 from downloadFP import download_fp
@@ -17,7 +20,9 @@ def parse_args():
                         metavar='POS1,POS2,...')
     parser.add_argument('--verbose', help='print verbose outputs',
                         action='store_true', default=False, required=False)
-    parser.add_argument('--test', help='Run in testing mode with limitted download',
+    parser.add_argument('--test', help='Run in testing mode with using a saved download',
+                        action='store_true', default=False, required=False)
+    parser.add_argument('--save', help='Save output for use in testing',
                         action='store_true', default=False, required=False)
 
     return parser.parse_args()
@@ -28,6 +33,7 @@ if __name__ == '__main__':
     options = parse_args()
     test = options.test
     verbose = options.verbose
+    save = options.save
     if test:
         print 'Running in testing mode'
     if options.positions is not None:
@@ -59,15 +65,35 @@ if __name__ == '__main__':
         for thread in threads:
 
             if test:
+                #Load all pickle files in the current directory, should eventually change this
+                #to take a path to a pickle as an input but this works for now.
+                nd = []
+                files = os.listdir(os.getcwd())
+                pickle_files = [f for f in files if f.endswith('pickle')]
+                if len(pickle_files) == 0:
+                    print "Run in testing mode but no pickle files found"
+                    print "Please run in save mode before running in test mode"
+                    sys.exit(1)
+
+                for f in pickle_files:
+                    with open(f, 'r') as fp:
+                        tmp = pickle.load(fp)
+                    nd.append(tmp)
                 #Remove the more comments BS
-                thread.comments.pop()
+                #thread.comments.pop()
             else:
                 #Populate the MoreComments objects so we have all comments
                 nd = ['placeholder']
                 while len(nd) > 0:
-                    print "Getting more comments. We currently have %d comments." + \
-                          " (This can take a while) ..." % (len(thread.comments)-1)
+                    print("Getting more comments. We currently have %d comments."
+                          " (This can take a while) ..." % (len(thread.comments)-1))
                     nd = praw.objects.Submission.replace_more_comments(thread)
+
+            if save:
+                thread_date = str(thread).split(",")[-1].strip().replace("/", "-")
+
+                with open("%s_%s_week-%d.pickle" % (thread_date, position, week), 'w') as fp:
+                    pickle.dump(nd, fp)
 
             #Will be: scoring, recommendation, over
             status = parse_reddit_comments(thread.comments, player_names, verbose=verbose)
