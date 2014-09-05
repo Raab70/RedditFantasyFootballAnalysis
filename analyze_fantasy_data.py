@@ -7,6 +7,7 @@ from downloadFP import download_fp
 from parseReddit import parse_reddit_comments
 #TODO: Compare Reddit suggestions to FP rankings
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description='Analyze Reddit FF recommendations')
     parser.add_argument('--week', type=int, required=True,
@@ -14,10 +15,10 @@ def parse_args():
     parser.add_argument('--positions',
                         help='comma separated positions to be analyzed, default is all, valid options are rb,wr,flex',
                         metavar='POS1,POS2,...')
-    parser.add_argument('--verbose',help='print verbose outputs',
-        action='store_true',default=False,required=False)
-    parser.add_argument('--test',help='Run in testing mode with limitted download',
-        action='store_true',default=False,required=False)
+    parser.add_argument('--verbose', help='print verbose outputs',
+                        action='store_true', default=False, required=False)
+    parser.add_argument('--test', help='Run in testing mode with limitted download',
+                        action='store_true', default=False, required=False)
 
     return parser.parse_args()
 
@@ -51,7 +52,7 @@ if __name__ == '__main__':
                                        period='week', sort='new')
 
         #Filter out threads whos title contains the word "INDEX"
-        threads = filter(lambda x: not "INDEX" in str(x).upper(),submissions)
+        threads = filter(lambda x: not "INDEX" in str(x).upper(), submissions)
 
         print "Beginning analysis on %d threads" % (len(threads))
 
@@ -64,14 +65,13 @@ if __name__ == '__main__':
                 #Populate the MoreComments objects so we have all comments
                 nd = ['placeholder']
                 while len(nd) > 0:
-                    print "Getting more comments. We currently have %d comments. (This can take a while) ..." % (len(thread.comments)-1)
+                    print "Getting more comments. We currently have %d comments." + \
+                          " (This can take a while) ..." % (len(thread.comments)-1)
                     nd = praw.objects.Submission.replace_more_comments(thread)
 
             #Will be: scoring, recommendation, over
-            status = parse_reddit_comments(thread.comments,player_names,verbose=verbose)
+            status = parse_reddit_comments(thread.comments, player_names, verbose=verbose)
 
 
 
     #Then we can translate those lists into meaningful stuff and things.
-
-
