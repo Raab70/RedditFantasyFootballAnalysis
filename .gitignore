@@ -47,7 +47,7 @@ target/
 #Specific to RedditFantasyFootballAnalysis
 *.tsv
 *.xls
-*,pickle
+*.pickle
 
 #Virtual environment stuff
 venv
