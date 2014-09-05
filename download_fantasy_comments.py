@@ -18,9 +18,9 @@ def parse_args():
     parser.add_argument('--positions',
                         help='comma separated positions to be analyzed, default is all, valid options are rb,wr,flex',
                         metavar='POS1,POS2,...')
-    parser.add_argument('--fp', help='flag to download fp data, default is true, keep false on sundays\n'
+    parser.add_argument('--fp', help='flag to bypass downloading fp data, default is true, keep false on sundays\n'
                                      '(I think, watch output to make sure its saved as the correct week)',
-                        action='store_true', default=True, required=False)
+                        action='store_false', default=True, required=False)
     parser.add_argument('--verbose', help='print verbose outputs',
                         action='store_true', default=False, required=False)
 
@@ -46,6 +46,8 @@ if __name__ == '__main__':
     if dl_fp:
         for position in positions:
             all_player_data = download_fp(position, week_now)
+    print "\n"
+    print "Beginning Reddit scrape-----------------------------------------------------------------"
 
     #Now scrape reddit
     r = praw.Reddit(user_agent='RCR')
