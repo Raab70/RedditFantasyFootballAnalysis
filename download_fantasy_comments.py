@@ -47,8 +47,8 @@ if __name__ == '__main__':
         for position in positions:
             all_player_data = download_fp(position, week_now)
     print "\n"
-    print "Beginning Reddit scrape-----------------------------------------------------------------"
-
+    print "------------Beginning Reddit scrape-------------------------------------------------------------------------"
+    print "\n"
     #Now scrape reddit
     r = praw.Reddit(user_agent='RCR')
     subreddit = r.get_subreddit('fantasyfootball')
