@@ -48,6 +48,7 @@ target/
 *.tsv
 *.xls
 *,pickle
+comments/
 
 #Virtual environment stuff
 venv
