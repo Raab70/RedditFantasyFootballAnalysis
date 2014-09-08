@@ -47,6 +47,12 @@ if __name__ == '__main__':
     #Now scrape reddit
     r = praw.Reddit(user_agent='RCR')
     subreddit = r.get_subreddit('fantasyfootball')
+    pickle_dir = os.path.abspath('./pickle')
+    fp_dir = os.path.abspath('./fp')
+    if not os.path.exists(pickle_dir):
+        os.mkdir(pickle_dir)
+    if not os.path.exists(fp_dir):
+        os.mkdir(fp_dir)
     print "Analyzing %d positions: %s" % (len(positions), ",".join(positions))
     for position in positions:
         print "Beginning position %s" % position
@@ -92,7 +98,7 @@ if __name__ == '__main__':
             if save:
                 thread_date = str(thread).split(",")[-1].strip().replace("/", "-")
 
-                with open("%s_%s_week-%d.pickle" % (thread_date, position, week), 'w') as fp:
+                with open(os.path.join(pickle_dir,"%s_%s_week-%d.pickle" % (thread_date, position, week)), 'w') as fp:
                     pickle.dump(nd, fp)
 
             #Will be: scoring, recommendation, over
