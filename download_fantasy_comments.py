@@ -29,7 +29,7 @@ def parse_args():
 
 if __name__ == '__main__':
     #Initial setup bullshit
-    season_start = datetime.datetime(2014, 8, 31, 0, 0)
+    season_start = datetime.datetime(2014, 9, 2, 0, 0)
     options = parse_args()
     verbose = options.verbose
     dl_fp = options.fp
@@ -66,20 +66,23 @@ if __name__ == '__main__':
         print "Beginning analysis on %d threads" % (len(threads))
 
         for thread in threads:
-            if verbose:
-                print "\n"
-                print "Analyzing thread: %s" % (str(thread))
-            #Populate the MoreComments objects so we have all comments
-            nd = ['placeholder']
-            while len(nd) > 0:
-                print("Getting more comments. We currently have %d comments."
-                      " (This can take a while) ..." % (len(thread.comments)-1))
-                nd = praw.objects.Submission.replace_more_comments(thread)
-            print "Finished getting comments. Final total is: %d" % (len(thread.comments))
             thread_date = str(thread).split(",")[-1].strip().replace("/", "-")
             thread_date_obj = datetime.datetime.strptime(thread_date, "%m-%d-%Y")
             days_from_season_start = (thread_date_obj - season_start).days
             week = (days_from_season_start / 7) + 1
+            if verbose:
+                print "\n"
+                print "Analyzing thread: %s from week %d" % (str(thread), week)
+            #Populate the MoreComments objects so we have all comments
+            nd = ['placeholder']
+            while len(nd) > 0:
+                if verbose:
+                    print("Getting more comments. We currently have %d comments."
+                          " (This can take a while) ..." % (len(thread.comments)-1))
+                nd = praw.objects.Submission.replace_more_comments(thread)
+            if verbose:
+                print "Finished getting comments. Final total is: %d" % (len(thread.comments))
+
             #DIRECTORY STRUCTURE:
             base_directory = os.path.join(os.getcwd(), "comments")
             week_directory = os.path.join(base_directory, "week_%02d" % week)
